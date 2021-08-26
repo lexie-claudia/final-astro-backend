@@ -10,6 +10,7 @@ const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwtSecret = process.env.JWT_SECRET;
+const cloudinary = require('cloudinary').v2;
 
 // This will tell passport where to find the JWT
 // and how to extract the payload
@@ -70,6 +71,14 @@ mongoose.connect(connectionString, connectionConfig).then(() => {
 }).catch((error) => {
     console.log('error occured', error);
 });
+
+cloudinary.config(
+    {
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_SECRET
+    }
+)
 
 app.use('/users', usersRoute);
 
